@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+}
+
+#cookie {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+}
