@@ -1,3 +1,4 @@
+/*** FORTUNE COOKIE GRAMMAR ***/
 const fortune = [
   {
     "fortune": ["You will #verb# #noun#."],
@@ -12,9 +13,9 @@ const fortune = [
 ]
 
 /*** ELEMENTS ***/
-const cookie = document.getElementById("cookie")
-const fortuneCard = document.getElementById("fortune-card")
-
+const cookie = document.querySelector("#cookie")
+const fortuneCard = document.querySelector("#fortune-card")
+const fortuneText = document.querySelector("#fortune-card p")
 
 /*** RUNTIME ***/
 cookie.addEventListener("click", handleCookieClick)
@@ -29,37 +30,26 @@ function handleCookieClick() {
       )
   )
   if (cookieState === 1) showFortune()
-  if (cookieState === 5) cookieState = 1
+  if (cookieState === 5) {
+    cookieState = 0
+    hideFortune()
+  }
   cookieState++
   cookie.src = `assets/${cookieState}.png`
 }
 
+/*** FORTUNE GENERATOR ***/
 function showFortune() {
   let phrase = tracery.createGrammar(fortune[randomInt(0, 1)]);
   let story = phrase.flatten("#fortune#");
-  fortuneCard.innerHTML = story;
+  fortuneCard.style.visibility = "visible";
+  fortuneText.innerHTML = story;
 }
 
-
-
-
-
-/*** FORTUNE GENERATOR ***/
-
-
-function main() {
-  let phrase = tracery.createGrammar(fortune[randomInt(0, 1)]);
-  let story = phrase.flatten("#fortune#");
-
-  const storyDiv = document.createElement('div');
-  storyDiv.style = "font-size: 30px; margin: 10%; line-height: 1.5;";
-  storyDiv.textContent = story;
-
-  document.body.insertAdjacentElement("beforeend", storyDiv);
+function hideFortune() {
+  fortuneCard.style.visibility = "hidden";
+  fortuneText.innerHTML = "";
 }
-
-
-setTimeout(main, 10);
 
 /*** HELPER METHODS ***/
 function randomInt(min, max) {
